@@ -1,0 +1,11 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+
+
+  
+  body {
+    font-family: 'Manrope', sans-serif;
+    background-color: #fafafa;
+    color: #222;
+  }
