@@ -36,7 +36,7 @@ const HeroSection = () => {
           >
             <span className="absolute inset-0 bg-gradient-to-r from-amber-500 to-amber-600 opacity-0 group-hover:opacity-10 transition-opacity duration-300"></span>
             <span className="relative flex items-center justify-center gap-2">
-              <span className="text-lg">Shop Now</span>
+              <Link to={"/all"} className="text-lg">Shop Now</Link >
               <svg 
                 xmlns="http://www.w3.org/2000/svg" 
                 className="h-5 w-5 transition-transform group-hover:translate-x-1 duration-200" 

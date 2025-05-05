@@ -6,6 +6,7 @@ import { FaCouch, FaBed, FaChair, FaTable, FaBoxes } from 'react-icons/fa';
 const ProductCategorySection = () => {
   const [activeCategory, setActiveCategory] = useState('all');
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [visibleCount, setVisibleCount] = useState(6); // Initial number of products to show
 
   // Categories with icons
   const categories = [
@@ -17,7 +18,7 @@ const ProductCategorySection = () => {
     { id: 'storage', name: 'Storage', icon: <FaBoxes className="mr-2" /> }
   ];
 
-  // All products data in a single array
+  // All products data (same as before)
   const allProducts = [
     {
       "id": 1,
@@ -376,6 +377,9 @@ const ProductCategorySection = () => {
     ? allProducts 
     : allProducts.filter(product => product.category === activeCategory);
 
+  // Products to display (first 'visibleCount' products)
+  const productsToShow = filteredProducts.slice(0, visibleCount);
+
   // Find related products
   const getRelatedProducts = (product) => {
     if (!product.related) return [];
@@ -400,6 +404,18 @@ const ProductCategorySection = () => {
     return stars;
   };
 
+  // Load more products
+  const loadMoreProducts = () => {
+    setVisibleCount(prev => prev + 6); // Load 6 more products
+  };
+
+  // Reset visible count when category changes
+  const handleCategoryChange = (categoryId) => {
+    setActiveCategory(categoryId);
+    setSelectedProduct(null);
+    setVisibleCount(6);
+  };
+
   return (
     <section id='shop' className="py-12 px-4 sm:px-6 lg:px-8 bg-gray-50">
       <div className="max-w-7xl mx-auto">
@@ -413,10 +429,7 @@ const ProductCategorySection = () => {
               {categories.map(category => (
                 <li key={category.id}>
                   <button
-                    onClick={() => {
-                      setActiveCategory(category.id);
-                      setSelectedProduct(null);
-                    }}
+                    onClick={() => handleCategoryChange(category.id)}
                     className={`w-full flex items-center p-3 rounded-md transition-colors ${
                       activeCategory === category.id 
                         ? 'bg-blue-50 text-blue-600' 
@@ -461,92 +474,7 @@ const ProductCategorySection = () => {
 
                 {/* Product Details */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 p-6">
-                  {/* Product Images */}
-                  <div className="space-y-4">
-                    <div className="bg-gray-100 rounded-lg overflow-hidden h-96">
-                      <img
-                        src={selectedProduct.images[0]}
-                        alt={selectedProduct.name}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <div className="flex space-x-2 overflow-x-auto py-2">
-                      {selectedProduct.images.map((img, index) => (
-                        <div
-                          key={index}
-                          className="flex-shrink-0 w-16 h-16 border-2 rounded-md overflow-hidden border-gray-200"
-                        >
-                          <img 
-                            src={img} 
-                            alt={`${selectedProduct.name} thumbnail ${index + 1}`}
-                            className="w-full h-full object-cover"
-                          />
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Product Info */}
-                  <div>
-                    <div className="flex items-center mb-4">
-                      <div className="flex mr-2">
-                        {renderStars(selectedProduct.rating)}
-                      </div>
-                      <span className="text-gray-600">({selectedProduct.rating})</span>
-                    </div>
-
-                    <div className="mb-6">
-                      <span className="text-2xl font-bold">${selectedProduct.price.toFixed(2)}</span>
-                      <span className="ml-3 text-lg text-gray-500 line-through">
-                        ${selectedProduct.oldPrice.toFixed(2)}
-                      </span>
-                      <span className="ml-3 text-lg text-red-600">
-                        Save ${(selectedProduct.oldPrice - selectedProduct.price).toFixed(2)}
-                      </span>
-                    </div>
-
-                    <div className="mb-6">
-                      <h3 className="font-bold text-lg mb-2">Description</h3>
-                      <p className="text-gray-700">{selectedProduct.description}</p>
-                    </div>
-
-                    <div className="mb-6">
-                      <h3 className="font-bold text-lg mb-2">Details</h3>
-                      <ul className="list-disc pl-5 space-y-1 text-gray-700">
-                        <li><strong>Material:</strong> {selectedProduct.material}</li>
-                        <li><strong>Dimensions:</strong> {selectedProduct.dimensions}</li>
-                        <li><strong>Available Colors:</strong> 
-                          <div className="flex mt-2 space-x-2">
-                            {selectedProduct.colors.map((color, idx) => (
-                              <div 
-                                key={idx}
-                                className="w-6 h-6 rounded-full border border-gray-200"
-                                style={{ backgroundColor: color }}
-                                title={`Color option ${idx + 1}`}
-                              />
-                            ))}
-                          </div>
-                        </li>
-                      </ul>
-                    </div>
-
-                    <div className="flex space-x-4 mb-6">
-                      <button
-                        onClick={() => console.log('Added to cart:', selectedProduct.id)}
-                        className="flex-1 bg-black text-white py-3 px-6 rounded-lg flex items-center justify-center hover:bg-gray-800 transition"
-                      >
-                        <FiShoppingCart className="mr-2" />
-                        Add to Cart
-                      </button>
-                      <button
-                        onClick={() => console.log('Added to wishlist:', selectedProduct.id)}
-                        className="flex-1 border border-black py-3 px-6 rounded-lg flex items-center justify-center hover:bg-gray-50 transition"
-                      >
-                        <FiHeart className="mr-2" />
-                        Wishlist
-                      </button>
-                    </div>
-                  </div>
+                  {/* ... (keep existing product details code) ... */}
                 </div>
 
                 {/* Related Products */}
@@ -579,50 +507,64 @@ const ProductCategorySection = () => {
                 )}
               </div>
             ) : (
-              /* Products Grid */
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filteredProducts.map(product => (
-                  <div
-                    key={product.id}
-                    className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow cursor-pointer"
-                    onClick={() => setSelectedProduct(product)}
-                  >
-                    <div className="relative">
-                      <img
-                        src={product.images[0]}
-                        alt={product.name}
-                        className="w-full h-48 object-cover"
-                      />
-                      <div className="absolute top-3 right-3 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
-                        {Math.round((1 - product.price / product.oldPrice) * 100)}% OFF
-                      </div>
-                    </div>
-
-                    <div className="p-4">
-                      <h4 className="font-semibold text-lg mb-1">{product.name}</h4>
-                      <p className="text-gray-600 text-sm mb-2 line-clamp-2">
-                        {product.description}
-                      </p>
-                      
-                      <div className="flex items-center mb-3">
-                        <div className="flex mr-2">
-                          {renderStars(product.rating)}
-                        </div>
-                        <span className="text-sm text-gray-500">({product.rating})</span>
-                      </div>
-
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <span className="text-lg font-bold">${product.price.toFixed(2)}</span>
-                          <span className="ml-2 text-sm text-gray-500 line-through">
-                            ${product.oldPrice.toFixed(2)}
-                          </span>
+              <>
+                {/* Products Grid */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {productsToShow.map(product => (
+                    <div
+                      key={product.id}
+                      className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow cursor-pointer"
+                      onClick={() => setSelectedProduct(product)}
+                    >
+                      <div className="relative">
+                        <img
+                          src={product.images[0]}
+                          alt={product.name}
+                          className="w-full h-48 object-cover"
+                        />
+                        <div className="absolute top-3 right-3 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
+                          {Math.round((1 - product.price / product.oldPrice) * 100)}% OFF
                         </div>
                       </div>
+
+                      <div className="p-4">
+                        <h4 className="font-semibold text-lg mb-1">{product.name}</h4>
+                        <p className="text-gray-600 text-sm mb-2 line-clamp-2">
+                          {product.description}
+                        </p>
+                        
+                        <div className="flex items-center mb-3">
+                          <div className="flex mr-2">
+                            {renderStars(product.rating)}
+                          </div>
+                          <span className="text-sm text-gray-500">({product.rating})</span>
+                        </div>
+
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <span className="text-lg font-bold">${product.price.toFixed(2)}</span>
+                            <span className="ml-2 text-sm text-gray-500 line-through">
+                              ${product.oldPrice.toFixed(2)}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
                     </div>
+                  ))}
+                </div>
+
+                {/* Show More Button */}
+                {filteredProducts.length > visibleCount && (
+                  <div className="mt-8 text-center">
+                    <button
+                      onClick={loadMoreProducts}
+                      className="px-6 py-3 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors font-medium"
+                    >
+                      Show More Products
+                    </button>
                   </div>
-                ))}
-              </div>
+                )}
+              </>
             )}
           </div>
         </div>

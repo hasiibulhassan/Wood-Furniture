@@ -17,7 +17,7 @@ const AdBanner = () => {
             </p>
             
             <Link 
-              to="/all" 
+              to="/new" 
               className="relative inline-flex items-center px-8 py-3 border-2 border-gray-900 text-gray-900 font-medium rounded-lg overflow-hidden group transition-all duration-300 hover:bg-gray-900 hover:text-white"
             >
               <span className="relative flex items-center gap-2">
