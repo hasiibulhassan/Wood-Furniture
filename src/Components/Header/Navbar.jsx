@@ -83,7 +83,7 @@ const Navbar = () => {
               <Link to="/wishlist" className="p-2 text-gray-600 hover:text-black">
                 <FiHeart className="text-xl" />
               </Link>
-              <Link to="/cart" className="p-2 text-gray-600 hover:text-black relative">
+              <Link to="" className="p-2 text-gray-600 hover:text-black relative">
                 <FiShoppingCart className="text-xl" />
                 <span className="absolute -top-1 -right-1 bg-black text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
                   3
