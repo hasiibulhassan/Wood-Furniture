@@ -474,7 +474,92 @@ const ProductCategorySection = () => {
 
                 {/* Product Details */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 p-6">
-                  {/* ... (keep existing product details code) ... */}
+                  {/* Product Images */}
+                  <div className="space-y-4">
+                    <div className="bg-gray-100 rounded-lg overflow-hidden h-96">
+                      <img
+                        src={selectedProduct.images[0]}
+                        alt={selectedProduct.name}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div className="flex space-x-2 overflow-x-auto py-2">
+                      {selectedProduct.images.map((img, index) => (
+                        <div
+                          key={index}
+                          className="flex-shrink-0 w-16 h-16 border-2 rounded-md overflow-hidden border-gray-200"
+                        >
+                          <img 
+                            src={img} 
+                            alt={`${selectedProduct.name} thumbnail ${index + 1}`}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Product Info */}
+                  <div>
+                    <div className="flex items-center mb-4">
+                      <div className="flex mr-2">
+                        {renderStars(selectedProduct.rating)}
+                      </div>
+                      <span className="text-gray-600">({selectedProduct.rating})</span>
+                    </div>
+
+                    <div className="mb-6">
+                      <span className="text-2xl font-bold">${selectedProduct.price.toFixed(2)}</span>
+                      <span className="ml-3 text-lg text-gray-500 line-through">
+                        ${selectedProduct.oldPrice.toFixed(2)}
+                      </span>
+                      <span className="ml-3 text-lg text-red-600">
+                        Save ${(selectedProduct.oldPrice - selectedProduct.price).toFixed(2)}
+                      </span>
+                    </div>
+
+                    <div className="mb-6">
+                      <h3 className="font-bold text-lg mb-2">Description</h3>
+                      <p className="text-gray-700">{selectedProduct.description}</p>
+                    </div>
+
+                    <div className="mb-6">
+                      <h3 className="font-bold text-lg mb-2">Details</h3>
+                      <ul className="list-disc pl-5 space-y-1 text-gray-700">
+                        <li><strong>Material:</strong> {selectedProduct.material}</li>
+                        <li><strong>Dimensions:</strong> {selectedProduct.dimensions}</li>
+                        <li><strong>Available Colors:</strong> 
+                          <div className="flex mt-2 space-x-2">
+                            {selectedProduct.colors.map((color, idx) => (
+                              <div 
+                                key={idx}
+                                className="w-6 h-6 rounded-full border border-gray-200"
+                                style={{ backgroundColor: color }}
+                                title={`Color option ${idx + 1}`}
+                              />
+                            ))}
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+
+                    <div className="flex space-x-4 mb-6">
+                      <button
+                        onClick={() => console.log('Added to cart:', selectedProduct.id)}
+                        className="flex-1 bg-black text-white py-3 px-6 rounded-lg flex items-center justify-center hover:bg-gray-800 transition"
+                      >
+                        <FiShoppingCart className="mr-2" />
+                        Add to Cart
+                      </button>
+                      <button
+                        onClick={() => console.log('Added to wishlist:', selectedProduct.id)}
+                        className="flex-1 border border-black py-3 px-6 rounded-lg flex items-center justify-center hover:bg-gray-50 transition"
+                      >
+                        <FiHeart className="mr-2" />
+                        Wishlist
+                      </button>
+                    </div>
+                  </div>
                 </div>
 
                 {/* Related Products */}
