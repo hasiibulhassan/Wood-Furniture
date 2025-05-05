@@ -1,64 +1,103 @@
+import { FiCalendar, FiClock, FiShare2, FiArrowRight } from 'react-icons/fi';
+import { FaRegComment } from 'react-icons/fa';
+
 const BlogSection = () => {
-    const blogs = [
-      {
-        id: 1,
-        title: "5 Ways to Style Your Living Room with Minimalist Furniture",
-        excerpt: "Discover how to create a sleek and functional living space with minimalist designs.",
-        date: "May 15, 2024",
-        category: "Interior Design"
-      },
-      {
-        id: 2,
-        title: "The Rise of Sustainable Wood in Modern Furniture",
-        excerpt: "Learn why eco-friendly materials are shaping the future of furniture.",
-        date: "April 28, 2024",
-        category: "Sustainability"
-      },
-      {
-        id: 3,
-        title: "How to Choose the Perfect Sofa for Your Space",
-        excerpt: "A guide to selecting the right size, material, and style for your home.",
-        date: "March 10, 2024",
-        category: "Buying Guide"
-      }
-    ];
-  
-    return (
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12 text-gray-900">Latest Blog Posts</h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {blogs.map((blog) => (
-              <div key={blog.id} className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow">
-                <div className="bg-gray-200 h-48 flex items-center justify-center">
-                  <svg className="w-16 h-16 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
-                  </svg>
+  const blogPosts = [
+    {
+      id: 1,
+      title: "The Future of Sustainable Furniture Design",
+      excerpt: "Exploring how eco-friendly materials and production methods are shaping the next generation of home furnishings.",
+      category: "Design Trends",
+      date: "May 15, 2023",
+      readTime: "5 min read",
+      comments: 12,
+      image: "/blog1.jpg"
+    },
+    {
+      id: 2,
+      title: "Maximizing Small Spaces: Urban Living Solutions",
+      excerpt: "Creative furniture arrangements and multi-functional pieces that transform compact apartments into spacious homes.",
+      category: "Living Tips",
+      date: "April 28, 2023",
+      readTime: "4 min read",
+      comments: 8,
+      image: "/blog2.jpg"
+    },
+    {
+      id: 3,
+      title: "The Art of Mixing Modern and Vintage Styles",
+      excerpt: "How to blend contemporary furniture with antique finds for a timeless, curated interior look.",
+      category: "Styling Guides",
+      date: "April 10, 2023",
+      readTime: "6 min read",
+      comments: 15,
+      image: "/blog3.jpg"
+    }
+  ];
+
+  return (
+    <section className="py-20 bg-gray-50">
+      <div className="container mx-auto px-4">
+        <div className="text-center mb-16">
+          <span className="inline-block text-sm font-medium text-gray-500 mb-3 tracking-wider">INSIGHTS & INSPIRATION</span>
+          <h2 className="text-4xl font-light text-gray-900 mb-4">
+            Design <span className="font-normal">Journal</span>
+          </h2>
+          <div className="w-20 h-px bg-gray-300 mx-auto"></div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+          {blogPosts.map((post) => (
+            <article key={post.id} className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300">
+              <div className="relative h-60 overflow-hidden">
+                <img 
+                  src={post.image} 
+                  alt={post.title}
+                  className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                />
+                <span className="absolute top-4 left-4 bg-white text-gray-800 text-xs font-medium px-3 py-1 rounded-full">
+                  {post.category}
+                </span>
+              </div>
+              
+              <div className="p-6">
+                <div className="flex items-center text-sm text-gray-500 mb-4">
+                  <span className="flex items-center mr-4">
+                    <FiCalendar className="mr-1" /> {post.date}
+                  </span>
+                  <span className="flex items-center">
+                    <FiClock className="mr-1" /> {post.readTime}
+                  </span>
                 </div>
-                <div className="p-6">
-                  <span className="text-sm text-gray-600 font-semibold">{blog.category}</span>
-                  <h3 className="text-xl font-bold mt-2 mb-3 text-gray-800">{blog.title}</h3>
-                  <p className="text-gray-600 mb-4">{blog.excerpt}</p>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-500">{blog.date}</span>
-                    <button className="text-gray-700 font-semibold hover:text-black">
-                      Read More →
-                    </button>
-                  </div>
+                
+                <h3 className="text-xl font-bold text-gray-900 mb-3 hover:text-blue-600 transition-colors">
+                  {post.title}
+                </h3>
+                
+                <p className="text-gray-600 mb-5">{post.excerpt}</p>
+                
+                <div className="flex justify-between items-center pt-4 border-t border-gray-100">
+                  <span className="flex items-center text-sm text-gray-500">
+                    <FaRegComment className="mr-2" /> {post.comments} comments
+                  </span>
+                  <button className="text-sm font-medium flex items-center text-gray-900 hover:text-blue-600 transition-colors">
+                    Read more <FiArrowRight className="ml-2" />
+                  </button>
                 </div>
               </div>
-            ))}
-          </div>
-  
-          <div className="text-center mt-12">
-            <button className="bg-gray-800 text-white px-6 py-3 rounded-lg hover:bg-black transition">
-              View All Articles
-            </button>
-          </div>
+            </article>
+          ))}
         </div>
-      </section>
-    );
-  };
+{/* 
+        <div className="text-center">
+          <button className="inline-flex items-center px-6 py-3 border border-gray-900 text-gray-900 font-medium rounded-lg hover:bg-gray-900 hover:text-white transition-colors duration-300">
+            View All Articles
+            <FiArrowRight className="ml-2" />
+          </button>
+        </div> */}
+      </div>
+    </section>
+  );
+};
 
-  export default BlogSection;
+export default BlogSection;

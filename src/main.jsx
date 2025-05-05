@@ -13,6 +13,9 @@ import Root from './Root.jsx';
 import Home from './Pages/HomePage/Home.jsx';
 import ContactPage from './Pages/Contact/ContactPage.jsx';
 import BrandSection from './Pages/Brand/BrandSection.jsx';
+import ProductCategorySection from './Pages/AllProduct/ProductCategorySection.jsx';
+import FAQSection from './Pages/FAQ/FAQSection.jsx';
+import NewArrivals from './Pages/NewArrival/NewArrival.jsx';
 
 
 const router = createBrowserRouter([
@@ -32,6 +35,18 @@ const router = createBrowserRouter([
       {
         path: "/brand",
         element: <BrandSection></BrandSection>
+      },
+      {
+        path: "/all",
+        element: <ProductCategorySection ></ProductCategorySection>
+      },
+      {
+        path: "/faq",
+        element: <FAQSection></FAQSection>
+      },
+      {
+        path: "/new",
+        element:<NewArrivals></NewArrivals>
       }
     ]
   },

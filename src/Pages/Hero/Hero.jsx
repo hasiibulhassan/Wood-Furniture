@@ -1,6 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+
+
+
 const HeroSection = () => {
   return (
     <section className="w-full bg-gray-50">

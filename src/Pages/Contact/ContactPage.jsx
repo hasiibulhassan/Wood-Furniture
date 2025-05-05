@@ -101,8 +101,8 @@ const ContactPage = () => {
                     </div>
                     <div>
                       <h3 className="font-medium text-gray-900">Call Us</h3>
-                      <p className="text-gray-600">+880 1711 123456 (Sales)</p>
-                      <p className="text-gray-600">+880 1711 654321 (Support)</p>
+                      <p className="text-gray-600">+880 1111 123456 (Sales)</p>
+                      <p className="text-gray-600">+880 1111 123456 (Support)</p>
                     </div>
                   </div>
   
@@ -114,8 +114,8 @@ const ContactPage = () => {
                     </div>
                     <div>
                       <h3 className="font-medium text-gray-900">Email Us</h3>
-                      <p className="text-gray-600">sales@furnicraft.com</p>
-                      <p className="text-gray-600">support@furnicraft.com</p>
+                      <p className="text-gray-600">sales@woodvine.com</p>
+                      <p className="text-gray-600">support@woodvine.com</p>
                     </div>
                   </div>
                 </div>

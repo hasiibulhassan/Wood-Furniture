@@ -5,12 +5,16 @@ import Navbar from './Components/Header/Navbar'
 import Footer from './Components/Footer/Footer'
 import MidHeader from './Components/Header/MidHeader'
 
+
+
 function Root() {
+
+    
     return (
         <div>
             <TopHeader></TopHeader>
             <MidHeader></MidHeader>
-            <Navbar></Navbar>
+            <Navbar ></Navbar>
          
 
             <Outlet></Outlet>

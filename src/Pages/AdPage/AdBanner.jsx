@@ -1,38 +1,47 @@
+import { Link } from "react-router-dom";
+
 const AdBanner = () => {
-    return (
-      <section className="py-12 bg-gray-100 border-t border-b border-gray-200">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row items-center justify-between">
-            <div className="mb-6 md:mb-0 md:mr-8">
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">Summer Collection Launch</h3>
-              <p className="text-gray-600 mb-4">
-                Get 20% off on all new arrivals. Limited time offer!
-              </p>
-              <button className="bg-gray-900 text-white px-6 py-2 rounded-md hover:bg-black transition">
-                Shop Now
-              </button>
-            </div>
-            <div className="bg-white p-4 border border-gray-300 rounded-lg shadow-sm">
-              <div className="flex items-center justify-center w-48 h-48 bg-gray-200 rounded">
+  return (
+    <section className="py-16 bg-white border-t border-b border-gray-100">
+      <div className="container mx-auto px-4">
+        <div className="flex flex-col md:flex-row items-center justify-between">
+          <div className="mb-8 md:mb-0 md:mr-8 max-w-lg">
+            <span className="inline-block px-3 py-1 text-xs font-medium text-black bg-gray-500 rounded-full mb-4">
+              Limited Time Offer
+            </span>
+            <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 leading-tight">
+              Summer <span className="font-bold">Collection</span> Launch
+            </h3>
+            <p className="text-lg text-gray-600 mb-6">
+              Get <span className="font-medium text-gray-900">20% off</span> on all new arrivals.
+            </p>
+            
+            <Link 
+              to="/all" 
+              className="relative inline-flex items-center px-8 py-3 border-2 border-gray-900 text-gray-900 font-medium rounded-lg overflow-hidden group transition-all duration-300 hover:bg-gray-900 hover:text-white"
+            >
+              <span className="relative flex items-center gap-2">
+                <span>Shop Now</span>
                 <svg 
-                  className="w-20 h-20 text-gray-500" 
+                  xmlns="http://www.w3.org/2000/svg" 
+                  className="h-5 w-5 transition-transform group-hover:translate-x-1 duration-200" 
                   fill="none" 
-                  stroke="currentColor" 
-                  viewBox="0 0 24 24"
+                  viewBox="0 0 24 24" 
+                  stroke="currentColor"
                 >
-                  <path 
-                    strokeLinecap="round" 
-                    strokeLinejoin="round" 
-                    strokeWidth="1.5" 
-                    d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" 
-                  />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                 </svg>
-              </div>
-            </div>
+              </span>
+            </Link>
+          </div>
+          
+          <div className="relative">
+          <img src="/ad1.jpg" alt="" />
           </div>
         </div>
-      </section>
-    );
-  };
+      </div>
+    </section>
+  );
+};
 
-  export default AdBanner;
+export default AdBanner;

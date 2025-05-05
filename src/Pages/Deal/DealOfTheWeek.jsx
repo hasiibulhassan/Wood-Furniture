@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FiShoppingCart, FiHeart, FiEye } from 'react-icons/fi';
+import { FiShoppingCart, FiHeart, FiEye, FiX, FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import { FaStar, FaStarHalfAlt, FaRegStar } from 'react-icons/fa';
 
 const DealOfTheWeek = () => {
@@ -7,6 +7,7 @@ const DealOfTheWeek = () => {
   const [timeLeft, setTimeLeft] = useState({});
   const [selectedProduct, setSelectedProduct] = useState(null);
 
+  // Sample product data with placeholder image URLs
   const products = [
     {
       id: 1,
@@ -48,6 +49,7 @@ const DealOfTheWeek = () => {
     }
   ];
 
+  // Countdown timer effect
   useEffect(() => {
     const timer = setInterval(() => {
       const now = new Date();
@@ -80,6 +82,7 @@ const DealOfTheWeek = () => {
     return () => clearInterval(timer);
   }, []);
 
+  // Handle body overflow when modal is open
   useEffect(() => {
     if (selectedProduct) {
       document.body.style.overflow = 'hidden';
@@ -88,6 +91,7 @@ const DealOfTheWeek = () => {
     }
   }, [selectedProduct]);
 
+  // Render star ratings
   const renderStars = (rating) => {
     const stars = [];
     const fullStars = Math.floor(rating);
@@ -95,21 +99,29 @@ const DealOfTheWeek = () => {
 
     for (let i = 1; i <= 5; i++) {
       if (i <= fullStars) {
-        stars.push(<FaStar key={i} className="text-amber-400 text-lg" />);
+        stars.push(<FaStar key={i} className="text-amber-400 text-sm" />);
       } else if (i === fullStars + 1 && hasHalfStar) {
-        stars.push(<FaStarHalfAlt key={i} className="text-amber-400 text-lg" />);
+        stars.push(<FaStarHalfAlt key={i} className="text-amber-400 text-sm" />);
       } else {
-        stars.push(<FaRegStar key={i} className="text-amber-400 text-lg" />);
+        stars.push(<FaRegStar key={i} className="text-amber-400 text-sm" />);
       }
     }
     return stars;
   };
 
+  // Handle add to cart
   const handleAddToCart = (product, quantity) => {
     console.log('Added to cart:', product.title, 'Quantity:', quantity);
     // Add your cart logic here
   };
 
+  // Handle add to wishlist
+  const handleAddToWishlist = (product) => {
+    console.log('Added to wishlist:', product.title);
+    // Add your wishlist logic here
+  };
+
+  // Product details modal component
   const ProductDetailsPopup = ({ product, onClose, onAddToCart }) => {
     const [mainImageIndex, setMainImageIndex] = useState(0);
     const [quantity, setQuantity] = useState(1);
@@ -134,8 +146,9 @@ const DealOfTheWeek = () => {
             <button 
               onClick={onClose}
               className="p-2 rounded-full hover:bg-gray-100"
+              aria-label="Close modal"
             >
-           
+              <FiX className="text-xl" />
             </button>
           </div>
 
@@ -150,14 +163,16 @@ const DealOfTheWeek = () => {
                 <button 
                   onClick={handlePrevImage}
                   className="absolute left-4 top-1/2 -translate-y-1/2 bg-white p-2 rounded-full shadow hover:bg-black hover:text-white transition"
+                  aria-label="Previous image"
                 >
-                  
+                  <FiChevronLeft className="text-xl" />
                 </button>
                 <button 
                   onClick={handleNextImage}
                   className="absolute right-4 top-1/2 -translate-y-1/2 bg-white p-2 rounded-full shadow hover:bg-black hover:text-white transition"
+                  aria-label="Next image"
                 >
-                
+                  <FiChevronRight className="text-xl" />
                 </button>
               </div>
               <div className="flex space-x-2 overflow-x-auto py-2">
@@ -166,6 +181,7 @@ const DealOfTheWeek = () => {
                     key={index}
                     onClick={() => setMainImageIndex(index)}
                     className={`flex-shrink-0 w-16 h-16 border-2 rounded-md overflow-hidden ${mainImageIndex === index ? 'border-black' : 'border-transparent'}`}
+                    aria-label={`View image ${index + 1}`}
                   >
                     <img 
                       src={img} 
@@ -236,6 +252,7 @@ const DealOfTheWeek = () => {
                   <button 
                     onClick={() => setQuantity(prev => Math.max(1, prev - 1))}
                     className="px-3 py-1 border rounded-l-md hover:bg-gray-100"
+                    aria-label="Decrease quantity"
                   >
                     -
                   </button>
@@ -243,6 +260,7 @@ const DealOfTheWeek = () => {
                   <button 
                     onClick={() => setQuantity(prev => prev + 1)}
                     className="px-3 py-1 border rounded-r-md hover:bg-gray-100"
+                    aria-label="Increase quantity"
                   >
                     +
                   </button>
@@ -260,7 +278,10 @@ const DealOfTheWeek = () => {
                   <FiShoppingCart className="mr-2" />
                   Add to Cart
                 </button>
-                <button className="flex-1 border border-black py-3 px-6 rounded-lg flex items-center justify-center hover:bg-gray-50 transition">
+                <button 
+                  onClick={() => handleAddToWishlist(product)}
+                  className="flex-1 border border-black py-3 px-6 rounded-lg flex items-center justify-center hover:bg-gray-50 transition"
+                >
                   <FiHeart className="mr-2" />
                   Wishlist
                 </button>
@@ -281,116 +302,111 @@ const DealOfTheWeek = () => {
   };
 
   return (
-    <section id='today' className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
-      <div className="max-w-7xl mx-auto">
-        <h2 className="text-5xl font-extrabold text-center mb-6 relative after:block after:w-24 after:h-1 after:bg-black after:mt-4 after:mx-auto">
+    <section id='today' className="py-12 px-4 sm:px-6 lg:px-8 bg-gray-50">
+      <div className="max-w-5xl mx-auto">
+        <h2 className="text-3xl font-extrabold text-center mb-6 relative after:block after:w-16 after:h-1 after:bg-black after:mt-3 after:mx-auto">
           Deal of the Week
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {products.map((product, index) => (
             <div
               key={product.id}
-              className="border-2 border-black rounded-lg overflow-hidden bg-white hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 cursor-pointer"
+              className="border-2 border-black rounded-lg overflow-hidden bg-white hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 cursor-pointer"
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
               onClick={() => setSelectedProduct(product)}
             >
               <div className="flex flex-col h-full">
-                <div className="w-full h-64 overflow-hidden relative">
+                <div className="w-full h-48 overflow-hidden relative">
                   <img
                     src={hoveredIndex === index ? product.images[1] : product.images[0]}
                     alt={product.title}
                     className="w-full h-full object-cover transition-opacity duration-500"
                   />
-                  <div className="absolute top-4 right-4 bg-red-600 text-white font-bold text-lg px-3 py-1 rounded-full shadow-lg">
+                  <div className="absolute top-3 right-3 bg-red-600 text-white font-bold text-sm px-2 py-1 rounded-full shadow-md">
                     {product.discountPercentage}% OFF
                   </div>
                   {hoveredIndex === index && (
                     <button 
-                      className="absolute top-4 left-4 bg-white p-2 rounded-full shadow-md"
+                      className="absolute top-3 left-3 bg-white p-1.5 rounded-full shadow-sm"
                       onClick={(e) => {
                         e.stopPropagation();
-                        // Add to wishlist logic
+                        handleAddToWishlist(product);
                       }}
+                      aria-label="Add to wishlist"
                     >
-                      <FiHeart className="text-gray-800 text-xl" />
+                      <FiHeart className="text-gray-800 text-lg" />
                     </button>
                   )}
                 </div>
 
-                <div className="p-6 flex flex-col justify-between flex-grow">
+                <div className="p-4 flex flex-col justify-between flex-grow">
                   <div>
-                    <h3 className="text-2xl font-bold mb-3">{product.title}</h3>
-                    <div className="flex items-center mb-3">
-                      <div className="flex mr-2">
+                    <h3 className="text-lg font-bold mb-2 line-clamp-1">{product.title}</h3>
+                    <div className="flex items-center mb-2">
+                      <div className="flex mr-1">
                         {renderStars(product.rating)}
                       </div>
-                      <span className="text-sm text-gray-600">
+                      <span className="text-xs text-gray-600">
                         ({product.rating})
                       </span>
                     </div>
-                    <div className="mb-4">
-                      <span className="text-2xl font-bold text-gray-900">
+                    <div className="mb-3">
+                      <span className="text-lg font-bold text-gray-900">
                         ${product.discountPrice.toFixed(2)}
                       </span>
-                      <span className="ml-3 text-lg text-gray-500 line-through">
+                      <span className="ml-2 text-sm text-gray-500 line-through">
                         ${product.originalPrice.toFixed(2)}
-                      </span>
-                      <span className="ml-3 text-lg font-medium text-red-600">
-                        Save $
-                        {(
-                          product.originalPrice - product.discountPrice
-                        ).toFixed(2)}
                       </span>
                     </div>
                   </div>
 
                   <div>
-                    <div className="bg-gray-100 p-3 rounded-lg mb-4">
-                      <p className="text-md font-medium text-gray-700 mb-1">
+                    <div className="bg-gray-100 p-2 rounded-lg mb-3 text-xs">
+                      <p className="font-medium text-gray-700 mb-1">
                         Deal ends in:
                       </p>
                       <div className="flex justify-between">
                         <div className="text-center">
-                          <div className="text-xl font-bold">{timeLeft[product.id]?.days || 0}</div>
-                          <div className="text-xs">Days</div>
+                          <div className="text-sm font-bold">{timeLeft[product.id]?.days || 0}</div>
+                          <div className="text-[10px]">Days</div>
                         </div>
                         <div className="text-center">
-                          <div className="text-xl font-bold">{timeLeft[product.id]?.hours || 0}</div>
-                          <div className="text-xs">Hours</div>
+                          <div className="text-sm font-bold">{timeLeft[product.id]?.hours || 0}</div>
+                          <div className="text-[10px]">Hours</div>
                         </div>
                         <div className="text-center">
-                          <div className="text-xl font-bold">{timeLeft[product.id]?.minutes || 0}</div>
-                          <div className="text-xs">Mins</div>
+                          <div className="text-sm font-bold">{timeLeft[product.id]?.minutes || 0}</div>
+                          <div className="text-[10px]">Mins</div>
                         </div>
                         <div className="text-center">
-                          <div className="text-xl font-bold">{timeLeft[product.id]?.seconds || 0}</div>
-                          <div className="text-xs">Secs</div>
+                          <div className="text-sm font-bold">{timeLeft[product.id]?.seconds || 0}</div>
+                          <div className="text-[10px]">Secs</div>
                         </div>
                       </div>
                     </div>
 
-                    <div className="flex space-x-3">
+                    <div className="flex space-x-2">
                       <button 
-                        className="flex-1 bg-black text-white py-3 px-4 rounded-lg flex items-center justify-center hover:bg-gray-800 transition-colors text-md font-medium"
+                        className="flex-1 bg-black text-white py-2 px-3 rounded-md flex items-center justify-center hover:bg-gray-800 transition-colors text-sm font-medium"
                         onClick={(e) => {
                           e.stopPropagation();
                           handleAddToCart(product, 1);
                         }}
                       >
-                        <FiShoppingCart className="mr-2" />
+                        <FiShoppingCart className="mr-1" />
                         Add to Cart
                       </button>
                       <button 
-                        className="flex-1 border border-black bg-white text-black py-3 px-4 rounded-lg flex items-center justify-center hover:bg-gray-50 transition-colors text-md font-medium"
+                        className="flex-1 border border-black bg-white text-black py-2 px-3 rounded-md flex items-center justify-center hover:bg-gray-50 transition-colors text-sm font-medium"
                         onClick={(e) => {
                           e.stopPropagation();
                           setSelectedProduct(product);
                         }}
                       >
-                        <FiEye className="mr-2" />
-                        View Details
+                        <FiEye className="mr-1" />
+                        Details
                       </button>
                     </div>
                   </div>
